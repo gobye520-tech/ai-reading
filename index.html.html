@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>宜蘭AI讀書會｜每週相聚，和AI一起成長</title>
+<meta name="description" content="宜蘭最活躍的AI學習社群，每週二晚上7點，一起探索AI工具的無限可能。免費參與，立即報名。">
+<style>
+:root{
+  --bg:#07050d;
+  --bg-2:#0d0918;
+  --card:rgba(255,255,255,.04);
+  --line:rgba(167,139,250,.18);
+  --text:#ece8f6;
+  --muted:#a59cbd;
+  --p-300:#c4b5fd;
+  --p-400:#a78bfa;
+  --p-500:#8b5cf6;
+  --p-600:#7c3aed;
+  --p-700:#6d28d9;
+  --glow:rgba(139,92,246,.45);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
+  line-height:1.7;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ---------- 背景 ---------- */
+.bg{position:fixed;inset:0;z-index:-1;overflow:hidden;background:
+  radial-gradient(1200px 700px at 50% -10%,#1b1033 0%,transparent 60%),var(--bg)}
+.bg::before{
+  content:"";position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(167,139,250,.07) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(167,139,250,.07) 1px,transparent 1px);
+  background-size:56px 56px;
+  mask-image:radial-gradient(ellipse at 50% 20%,#000 20%,transparent 75%);
+  -webkit-mask-image:radial-gradient(ellipse at 50% 20%,#000 20%,transparent 75%);
+}
+.orb{position:absolute;border-radius:50%;filter:blur(90px);opacity:.55;will-change:transform}
+.orb.a{width:520px;height:520px;background:var(--p-600);top:-120px;left:-120px;animation:float1 18s ease-in-out infinite}
+.orb.b{width:440px;height:440px;background:#c026d3;right:-140px;top:30%;opacity:.28;animation:float2 22s ease-in-out infinite}
+.orb.c{width:380px;height:380px;background:var(--p-500);left:20%;bottom:-160px;opacity:.3;animation:float1 26s ease-in-out infinite reverse}
+@keyframes float1{0%,100%{transform:translate(0,0)}50%{transform:translate(70px,50px)}}
+@keyframes float2{0%,100%{transform:translate(0,0)}50%{transform:translate(-60px,70px)}}
+
+/* ---------- 共用 ---------- */
+.wrap{width:min(1120px,100% - 40px);margin-inline:auto}
+section{padding:110px 0;position:relative}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:.82rem;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--p-300);
+  padding:6px 14px;border:1px solid var(--line);border-radius:999px;
+  background:rgba(139,92,246,.08);
+}
+.eyebrow i{width:7px;height:7px;border-radius:50%;background:var(--p-400);box-shadow:0 0 10px var(--p-400);animation:pulse 2s infinite}
+@keyframes pulse{50%{opacity:.35}}
+h2{font-size:clamp(1.8rem,4.5vw,2.8rem);line-height:1.25;margin:18px 0 0;font-weight:800;letter-spacing:.02em}
+.grad{
+  background:linear-gradient(120deg,#e9d5ff 0%,var(--p-400) 45%,#f0abfc 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+
+/* 捲動淡入 */
+.reveal{opacity:0;transform:translateY(32px);transition:opacity .9s cubic-bezier(.22,.8,.3,1),transform .9s cubic-bezier(.22,.8,.3,1);transition-delay:var(--d,0s)}
+.reveal.in{opacity:1;transform:none}
+
+/* ---------- 按鈕 ---------- */
+.btn{
+  position:relative;display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  padding:16px 38px;border-radius:999px;border:0;cursor:pointer;
+  font:700 1.08rem/1 inherit;font-family:inherit;color:#fff;text-decoration:none;letter-spacing:.08em;
+  background:linear-gradient(135deg,var(--p-500),var(--p-700));
+  box-shadow:0 10px 30px -8px var(--glow),inset 0 1px 0 rgba(255,255,255,.25);
+  transition:transform .3s ease,box-shadow .3s ease;
+  overflow:hidden;
+}
+.btn::after{
+  content:"";position:absolute;top:0;left:-120%;width:80%;height:100%;
+  background:linear-gradient(100deg,transparent,rgba(255,255,255,.35),transparent);
+  transform:skewX(-20deg);transition:left .7s ease;
+}
+.btn:hover{transform:translateY(-3px);box-shadow:0 16px 40px -8px var(--glow),inset 0 1px 0 rgba(255,255,255,.3)}
+.btn:hover::after{left:140%}
+.btn:active{transform:translateY(0) scale(.98)}
+.btn svg{width:18px;height:18px;transition:transform .3s}
+.btn:hover svg{transform:translateX(4px)}
+.btn:focus-visible{outline:2px solid var(--p-300);outline-offset:4px}
+
+/* ---------- Hero ---------- */
+.hero{min-height:100svh;display:flex;align-items:center;text-align:center;padding:120px 0 80px}
+.hero h1{
+  font-size:clamp(2.3rem,7.5vw,5rem);
+  line-height:1.15;font-weight:900;letter-spacing:.03em;margin:26px 0 24px;
+}
+.hero p.sub{
+  max-width:640px;margin:0 auto 42px;
+  color:var(--muted);font-size:clamp(1rem,2.4vw,1.2rem);
+}
+.chips{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:52px}
+.chip{
+  padding:10px 20px;border-radius:14px;
+  background:var(--card);border:1px solid var(--line);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  font-size:.95rem;color:var(--text);
+}
+.chip b{color:var(--p-300);font-weight:700}
+.scroll-hint{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);width:24px;height:40px;border:2px solid var(--line);border-radius:14px}
+.scroll-hint::after{content:"";position:absolute;top:7px;left:50%;width:4px;height:8px;margin-left:-2px;border-radius:2px;background:var(--p-400);animation:wheel 1.8s infinite}
+@keyframes wheel{0%{opacity:1;transform:translateY(0)}100%{opacity:0;transform:translateY(14px)}}
+
+/* ---------- 關於 ---------- */
+.about-grid{display:grid;grid-template-columns:1.25fr 1fr;gap:56px;align-items:center}
+.about-text p{color:var(--muted);font-size:1.08rem;margin-top:22px}
+.about-text p strong{color:var(--p-300);font-weight:600}
+.stat-card{
+  position:relative;padding:44px 32px;text-align:center;border-radius:28px;
+  background:linear-gradient(160deg,rgba(139,92,246,.16),rgba(139,92,246,.03));
+  border:1px solid var(--line);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  box-shadow:0 30px 80px -30px var(--glow);
+}
+.stat-card::before{
+  content:"";position:absolute;inset:-1px;border-radius:inherit;padding:1px;
+  background:linear-gradient(140deg,var(--p-400),transparent 40%,transparent 60%,#e879f9);
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;mask-composite:exclude;opacity:.55;pointer-events:none;
+}
+.stat-num{font-size:clamp(4rem,10vw,6rem);font-weight:900;line-height:1;font-variant-numeric:tabular-nums}
+.stat-num small{font-size:.5em;margin-left:2px}
+.stat-label{color:var(--muted);margin-top:10px;letter-spacing:.12em}
+.stat-row{display:flex;justify-content:center;gap:28px;margin-top:30px;padding-top:26px;border-top:1px solid var(--line)}
+.stat-row div{font-size:.88rem;color:var(--muted)}
+.stat-row b{display:block;font-size:1.25rem;color:var(--text)}
+
+/* ---------- 亮點 ---------- */
+.head-center{text-align:center;margin-bottom:60px}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.card{
+  position:relative;padding:38px 30px 34px;border-radius:24px;
+  background:var(--card);border:1px solid var(--line);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  transition:transform .4s cubic-bezier(.22,.8,.3,1),border-color .4s,box-shadow .4s,background .4s;
+  overflow:hidden;
+}
+.card::before{
+  content:"";position:absolute;width:220px;height:220px;top:-110px;right:-80px;border-radius:50%;
+  background:radial-gradient(circle,var(--glow),transparent 70%);opacity:0;transition:opacity .5s;
+}
+.card:hover{transform:translateY(-8px);border-color:rgba(167,139,250,.5);box-shadow:0 26px 60px -26px var(--glow);background:rgba(139,92,246,.07)}
+.card:hover::before{opacity:.8}
+.icon{
+  width:56px;height:56px;border-radius:16px;display:grid;place-items:center;margin-bottom:24px;
+  background:linear-gradient(135deg,var(--p-500),var(--p-700));
+  box-shadow:0 10px 24px -8px var(--glow);
+}
+.icon svg{width:28px;height:28px;stroke:#fff;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.card .no{position:absolute;top:22px;right:26px;font-size:2.6rem;font-weight:900;color:rgba(167,139,250,.12);font-family:ui-monospace,Menlo,monospace}
+.card h3{font-size:1.3rem;margin-bottom:12px;font-weight:700}
+.card p{color:var(--muted);font-size:1rem}
+
+/* ---------- CTA ---------- */
+.cta-box{
+  position:relative;text-align:center;padding:84px 28px;border-radius:36px;overflow:hidden;
+  background:
+    radial-gradient(600px 300px at 50% 0%,rgba(139,92,246,.35),transparent 70%),
+    linear-gradient(180deg,rgba(139,92,246,.1),rgba(139,92,246,.02));
+  border:1px solid var(--line);
+}
+.cta-box h2{margin-top:0}
+.cta-box p{color:var(--muted);max-width:520px;margin:18px auto 38px}
+.cta-meta{margin-top:26px;font-size:.92rem;color:var(--muted)}
+
+footer{text-align:center;padding:40px 20px 50px;color:#6f6688;font-size:.88rem;border-top:1px solid rgba(167,139,250,.08)}
+
+/* ---------- RWD ---------- */
+@media (max-width:900px){
+  .about-grid{grid-template-columns:1fr;gap:40px}
+  .cards{grid-template-columns:1fr;max-width:520px;margin-inline:auto}
+}
+@media (max-width:600px){
+  section{padding:80px 0}
+  .hero{padding:100px 0 90px}
+  .btn{width:100%;max-width:320px}
+  .stat-row{gap:18px}
+  .cta-box{padding:60px 20px;border-radius:28px}
+  .scroll-hint{display:none}
+  .orb{filter:blur(70px)}
+}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .reveal{opacity:1;transform:none}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+
+<div class="bg" aria-hidden="true">
+  <div class="orb a"></div><div class="orb b"></div><div class="orb c"></div>
+</div>
+
+<!-- Hero -->
+<header class="hero">
+  <div class="wrap">
+    <span class="eyebrow reveal"><i></i>宜蘭 AI 讀書會</span>
+    <h1 class="reveal" style="--d:.1s">每週相聚，<br>和<span class="grad">AI</span>一起成長</h1>
+    <p class="sub reveal" style="--d:.2s">宜蘭最活躍的AI學習社群，每周二晚上7點，一起探索AI工具的無限可能</p>
+    <div class="reveal" style="--d:.3s">
+      <a class="btn js-register" href="#join">立即報名
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    </div>
+    <div class="chips reveal" style="--d:.45s">
+      <span class="chip">📅 每週二 <b>19:00</b></span>
+      <span class="chip">👥 <b>50+</b> 位成員</span>
+      <span class="chip">🎟️ <b>免費</b>參與</span>
+    </div>
+  </div>
+  <div class="scroll-hint" aria-hidden="true"></div>
+</header>
+
+<main>
+<!-- 關於 -->
+<section id="about">
+  <div class="wrap about-grid">
+    <div class="about-text">
+      <span class="eyebrow reveal">About Us</span>
+      <h2 class="reveal" style="--d:.08s">一群對AI<span class="grad">充滿熱情</span>的人</h2>
+      <p class="reveal" style="--d:.16s">我們是一群對AI充滿熱情的職場工作者，從<strong>2026年初</strong>開始，每週固定聚會分享最新的AI工具與實戰應用。</p>
+      <p class="reveal" style="--d:.24s">不需要工程師背景，只要你對AI感興趣，這裡就是屬於你的地方。</p>
+    </div>
+    <div class="stat-card reveal" style="--d:.2s">
+      <div class="stat-num grad"><span data-count="50">0</span><small>+</small></div>
+      <div class="stat-label">目前社群成員</div>
+      <div class="stat-row">
+        <div><b>每週二</b>晚上 7 點</div>
+        <div><b>2026</b>年初成立</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 亮點 -->
+<section id="features">
+  <div class="wrap">
+    <div class="head-center">
+      <span class="eyebrow reveal">Highlights</span>
+      <h2 class="reveal" style="--d:.08s">為什麼大家都<span class="grad">愛來</span></h2>
+    </div>
+    <div class="cards">
+      <article class="card reveal" style="--d:.05s">
+        <span class="no">01</span>
+        <div class="icon"><svg viewBox="0 0 24 24"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8z"/></svg></div>
+        <h3>每週實戰分享</h3>
+        <p>不講理論，只分享真正用過有效的AI工具與技巧</p>
+      </article>
+      <article class="card reveal" style="--d:.18s">
+        <span class="no">02</span>
+        <div class="icon"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><circle cx="17" cy="9.5" r="2.4"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6M15.5 14.2c3 0 5.5 2.2 5.5 5.3"/></svg></div>
+        <h3>跨領域交流</h3>
+        <p>成員涵蓋設計、行銷、業務、工程、教育等各行各業</p>
+      </article>
+      <article class="card reveal" style="--d:.31s">
+        <span class="no">03</span>
+        <div class="icon"><svg viewBox="0 0 24 24"><path d="M20 12v8H4v-8M2 7h20v5H2zM12 22V7M12 7H7.5a2.5 2.5 0 1 1 0-5C11 2 12 7 12 7zM12 7h4.5a2.5 2.5 0 1 0 0-5C13 2 12 7 12 7z"/></svg></div>
+        <h3>免費參與</h3>
+        <p>開放報名，歡迎任何對AI有興趣的人加入</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="join">
+  <div class="wrap">
+    <div class="cta-box reveal">
+      <h2>下週二，<span class="grad">我們等你</span></h2>
+      <p>不需要任何基礎，帶著好奇心來就好。</p>
+      <a class="btn js-register" href="#join">立即報名
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+      <div class="cta-meta">每週二 19:00 ・ 免費參加</div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>© 2026 宜蘭AI讀書會</footer>
+
+<script>
+/* ★ 把報名表單連結（Google 表單、Line 社群等）貼在這裡 */
+var REGISTER_URL = "";
+
+(function(){
+  // 報名按鈕
+  document.querySelectorAll('.js-register').forEach(function(a){
+    if(REGISTER_URL){
+      a.href = REGISTER_URL;
+      a.target = "_blank";
+      a.rel = "noopener";
+    }
+  });
+
+  // 捲動淡入
+  var items = document.querySelectorAll('.reveal');
+  if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    },{threshold:.15,rootMargin:'0px 0px -40px 0px'});
+    items.forEach(function(el){ io.observe(el); });
+  }else{
+    items.forEach(function(el){ el.classList.add('in'); });
+  }
+
+  // 數字跳動
+  var counter = document.querySelector('[data-count]');
+  if(counter){
+    var target = +counter.dataset.count, started = false;
+    var co = new IntersectionObserver(function(entries){
+      if(entries[0].isIntersecting && !started){
+        started = true;
+        var t0 = performance.now(), dur = 1600;
+        (function tick(t){
+          var p = Math.min((t - t0)/dur, 1);
+          counter.textContent = Math.round(target * (1 - Math.pow(1 - p, 3)));
+          if(p < 1) requestAnimationFrame(tick);
+        })(t0);
+        co.disconnect();
+      }
+    },{threshold:.5});
+    co.observe(counter);
+  }
+})();
+</script>
+</body>
+</html>
